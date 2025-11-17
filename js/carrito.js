@@ -1,4 +1,4 @@
-export class Carrito {
+class Carrito {
     constructor(){
         this.recetas = [];
         this.ingredientes = [];

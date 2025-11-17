@@ -1,4 +1,4 @@
-export class Receta {
+class Receta {
   constructor(nombre, ingredientes) {
     this.nombre = nombre;
     this.ingredientes = ingredientes

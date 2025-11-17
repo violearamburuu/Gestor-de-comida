@@ -1,8 +1,5 @@
 // script.js
 
-import { Receta } from "./receta.js";
-import { Carrito } from "./carrito.js";
-
 // Instancias globales
 const carrito = new Carrito();
 
@@ -462,12 +459,21 @@ function exportarListaIngredientes() {
 
 // Funciones del Planificador Semanal
 function cargarPlanificador() {
+  console.log("Cargando planificador...");
+  console.log("Recetas en carrito:", carrito.recetas);
   cargarRecetasDisponibles();
   cargarSemana();
 }
 
 function cargarRecetasDisponibles() {
   const container = document.getElementById("recetas-disponibles");
+  
+  if (!container) {
+    console.error("No se encontró el elemento recetas-disponibles");
+    return;
+  }
+  
+  console.log("Cargando recetas disponibles, carrito tiene:", carrito.recetas.length, "recetas");
   
   if (carrito.recetas.length === 0) {
     container.innerHTML = `
@@ -918,3 +924,22 @@ function limpiarDatosGuardados() {
 cargarDatos(); // Cargar datos persistentes primero
 cargarRecetas();
 cargarTodasLasRecetas();
+
+// Asegurar que todo esté disponible
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM cargado, inicializando aplicación");
+  
+  // Verificar que las clases estén disponibles
+  if (typeof Receta === 'undefined') {
+    console.error("Clase Receta no está disponible");
+  }
+  if (typeof Carrito === 'undefined') {
+    console.error("Clase Carrito no está disponible");
+  }
+  
+  // Si el planificador está activo, cargarlo
+  const planificadorTab = document.getElementById("planificador-tab");
+  if (planificadorTab && planificadorTab.classList.contains("active")) {
+    setTimeout(() => cargarPlanificador(), 100);
+  }
+});
