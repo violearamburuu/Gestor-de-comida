@@ -920,11 +920,6 @@ function limpiarDatosGuardados() {
   }
 }
 
-// cargar al iniciar
-cargarDatos(); // Cargar datos persistentes primero
-cargarRecetas();
-cargarTodasLasRecetas();
-
 // Asegurar que todo esté disponible
 document.addEventListener('DOMContentLoaded', function() {
   console.log("DOM cargado, inicializando aplicación");
@@ -936,6 +931,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof Carrito === 'undefined') {
     console.error("Clase Carrito no está disponible");
   }
+  
+  // Cargar datos y funciones después de que DOM esté listo
+  cargarDatos(); // Cargar datos persistentes primero
+  cargarRecetas(); // Cargar recetas en "Armar carrito"
+  cargarTodasLasRecetas(); // Cargar recetas en "Recetas"
   
   // Si el planificador está activo, cargarlo
   const planificadorTab = document.getElementById("planificador-tab");
