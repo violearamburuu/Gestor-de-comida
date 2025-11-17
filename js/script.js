@@ -570,7 +570,6 @@ function mostrarNotificacion(mensaje, tipo = "success") {
   
   notificacion.innerHTML = `
     ${mensaje}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   `;
   
   document.body.appendChild(notificacion);
