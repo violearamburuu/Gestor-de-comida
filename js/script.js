@@ -297,11 +297,13 @@ function actualizarVistaCarrito() {
     btnLimpiar.disabled = true;
     btnExportar.disabled = true;
   } else {
-    // Mostrar ingredientes
+    // Mostrar ingredientes ordenados por cantidad (más frecuentes primero)
+    const ingredientesOrdenados = [...carrito.ingredientes].sort((a, b) => b.cantidad - a.cantidad);
+    
     listaIngredientes.innerHTML = `
       <h4 class="mb-3">Lista de Ingredientes</h4>
       <div class="list-group">
-        ${carrito.ingredientes.map(ingrediente => `
+        ${ingredientesOrdenados.map(ingrediente => `
           <div class="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <strong>${ingrediente.nombre}</strong>
