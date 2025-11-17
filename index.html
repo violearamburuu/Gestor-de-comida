@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestor de recetas</title>
+    <title>Planificador de comida</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,7 +14,7 @@
       :root {
         --bs-primary-rgb: 169, 35, 133;
         --bs-primary: rgb(169, 35, 133);
-        --secondary-color: #95377b;
+        --secondary-color: #8f126f;
         --tercer-color: rgb(255, 192, 222);
         --success-color: #28a745;
         --danger-color: #dc3545;
@@ -22,7 +22,7 @@
       }
 
       .nav-link.active {
-        background-color: rgb(139, 30, 117) !important;
+        background-color: var(--secondary-color) !important;
         color: white !important;
         border-radius: 8px;
       }
@@ -58,7 +58,6 @@
         color: white !important;
       }
 
-
       .btn-outline-danger:hover {
         background-color: var(--danger-color) !important;
         border-color: var(--danger-color) !important;
@@ -76,7 +75,6 @@
         border-color: var(--secondary-color) !important;
         color: white !important;
       }
-       
     </style>
   </head>
 
@@ -135,6 +133,18 @@
                 aria-controls="carrito"
                 aria-selected="false"
                 >Carrito</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="planificador-tab"
+                data-bs-toggle="tab"
+                href="#planificador"
+                role="tab"
+                aria-controls="planificador"
+                aria-selected="false"
+                >Planificador semanal</a
               >
             </li>
           </ul>
@@ -354,6 +364,216 @@
                   >
                     <i class="fas fa-database me-1"></i>Reset Total
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pestaña Planificador Semanal -->
+        <div
+          class="tab-pane fade"
+          id="planificador"
+          role="tabpanel"
+          aria-labelledby="planificador-tab"
+        >
+          <h1 class="mb-4 display-6 text-primary fs-2">Planificador Semanal</h1>
+
+            <div class="card">
+              <div class="card-header">
+                <h6 class="mb-0">Recetas disponibles</h6>
+              </div>
+              <div class="card-body col-md-4" id="recetas-disponibles">
+                <div class="text-muted text-center p-3">
+                  <i class="fas fa-utensils fa-2x mb-2 col-md-4"></i>
+                  <p class="mb-0">Agrega recetas al carrito primero</p>
+                </div>
+              </div>
+            </div>
+       
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row" id="planificador-semana">
+                    <!-- Lunes -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Lunes
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="lunes"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Martes -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Martes
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="martes"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Miércoles -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Miércoles
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="miercoles"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Jueves -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Jueves
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="jueves"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Viernes -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Viernes
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="viernes"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Sábado -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Sábado
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="sabado"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Domingo -->
+                    <div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+                      <div class="card h-100">
+                        <div
+                          class="card-header bg-primary text-white text-center"
+                        >
+                          <h6 class="mb-0">
+                            <i class="fas fa-calendar-day me-2"></i>Domingo
+                          </h6>
+                        </div>
+                        <div
+                          class="card-body dia-planificador"
+                          data-dia="domingo"
+                          style="min-height: 200px"
+                        >
+                          <div class="text-muted text-center p-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <p class="mb-0">Agregar comidas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="d-flex gap-2">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      id="limpiar-planificador"
+                    >
+                      <i class="fas fa-eraser me-1"></i>Limpiar Semana
+                    </button>
+                    <button
+                      class="btn btn-outline-success btn-sm"
+                      id="exportar-planificador"
+                    >
+                      <i class="fas fa-download me-1"></i>Exportar Plan
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

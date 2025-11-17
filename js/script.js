@@ -14,7 +14,19 @@ let filtroRecetas = "";
 const STORAGE_KEYS = {
   RECETAS: 'gestor_comidas_recetas',
   CARRITO: 'gestor_comidas_carrito',
-  FILTROS: 'gestor_comidas_filtros'
+  FILTROS: 'gestor_comidas_filtros',
+  PLANIFICADOR: 'gestor_comidas_planificador'
+};
+
+// Planificador semanal
+let planificadorSemanal = {
+  lunes: [],
+  martes: [],
+  miercoles: [],
+  jueves: [],
+  viernes: [],
+  sabado: [],
+  domingo: []
 };
 
 // Datos de recetas (se cargarán desde localStorage o datos por defecto)
@@ -126,6 +138,26 @@ document.addEventListener("click", (e) => {
     limpiarDatosGuardados();
   }
   
+  if (e.target.classList.contains("agregar-a-dia")) {
+    const recetaNombre = e.target.dataset.receta;
+    const dia = e.target.dataset.dia;
+    agregarRecetaADia(recetaNombre, dia);
+  }
+  
+  if (e.target.classList.contains("quitar-de-dia")) {
+    const index = Number(e.target.dataset.index);
+    const dia = e.target.dataset.dia;
+    quitarRecetaDeDia(dia, index);
+  }
+  
+  if (e.target.id === "limpiar-planificador") {
+    limpiarPlanificador();
+  }
+  
+  if (e.target.id === "exportar-planificador") {
+    exportarPlanificador();
+  }
+  
   if (e.target.id === "limpiar-buscar-carrito") {
     document.getElementById("buscar-carrito").value = "";
     filtroCarrito = "";
@@ -161,6 +193,10 @@ document.addEventListener("shown.bs.tab", (e) => {
   }
   if (e.target.id === "recetas-tab") {
     cargarTodasLasRecetas();
+  }
+  
+  if (e.target.id === "planificador-tab") {
+    cargarPlanificador();
   }
 });
 
@@ -424,6 +460,186 @@ function exportarListaIngredientes() {
   mostrarNotificacion("Lista de ingredientes exportada exitosamente", "success");
 }
 
+// Funciones del Planificador Semanal
+function cargarPlanificador() {
+  cargarRecetasDisponibles();
+  cargarSemana();
+}
+
+function cargarRecetasDisponibles() {
+  const container = document.getElementById("recetas-disponibles");
+  
+  if (carrito.recetas.length === 0) {
+    container.innerHTML = `
+      <div class="text-muted text-center p-3">
+        <i class="fas fa-utensils fa-2x mb-2"></i>
+        <p class="mb-0">Agrega recetas al carrito primero</p>
+        <small>Ve a "Armar Carrito" para seleccionar recetas</small>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = `
+    <div class="d-flex flex-wrap" style="gap: 0.25rem;">
+      ${carrito.recetas.map(receta => `
+        <div class="dropdown">
+          <button class="btn btn-outline-primary btn-sm dropdown-toggle text-nowrap" type="button" 
+                  data-bs-toggle="dropdown" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">
+            ${receta.nombre}
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="lunes">
+              <i class="fas fa-plus me-2"></i>Lunes
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="martes">
+              <i class="fas fa-plus me-2"></i>Martes
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="miercoles">
+              <i class="fas fa-plus me-2"></i>Miércoles
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="jueves">
+              <i class="fas fa-plus me-2"></i>Jueves
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="viernes">
+              <i class="fas fa-plus me-2"></i>Viernes
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="sabado">
+              <i class="fas fa-plus me-2"></i>Sábado
+            </button></li>
+            <li><button class="dropdown-item agregar-a-dia" data-receta="${receta.nombre}" data-dia="domingo">
+              <i class="fas fa-plus me-2"></i>Domingo
+            </button></li>
+          </ul>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function cargarSemana() {
+  const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+  
+  dias.forEach(dia => {
+    const container = document.querySelector(`.dia-planificador[data-dia="${dia}"]`);
+    const recetasDia = planificadorSemanal[dia] || [];
+    
+    if (recetasDia.length === 0) {
+      container.innerHTML = `
+        <div class="text-muted text-center p-3">
+          <i class="fas fa-plus-circle fa-2x mb-2"></i>
+          <p class="mb-0">Agregar comidas</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="d-grid gap-2">
+          ${recetasDia.map((receta, index) => `
+            <div class="card card-body py-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">${receta}</h6>
+                  <small class="text-muted">Comida planificada</small>
+                </div>
+                <button class="btn btn-outline-danger btn-sm quitar-de-dia" 
+                        data-dia="${dia}" data-index="${index}"
+                        title="Quitar del día">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+  });
+}
+
+function agregarRecetaADia(recetaNombre, dia) {
+  if (!planificadorSemanal[dia]) {
+    planificadorSemanal[dia] = [];
+  }
+  
+  planificadorSemanal[dia].push(recetaNombre);
+  guardarDatos();
+  cargarSemana();
+  mostrarNotificacion(`"${recetaNombre}" agregada a ${dia.charAt(0).toUpperCase() + dia.slice(1)}`, "success");
+}
+
+function quitarRecetaDeDia(dia, index) {
+  const recetaEliminada = planificadorSemanal[dia][index];
+  planificadorSemanal[dia].splice(index, 1);
+  guardarDatos();
+  cargarSemana();
+  mostrarNotificacion(`"${recetaEliminada}" removida de ${dia.charAt(0).toUpperCase() + dia.slice(1)}`, "info");
+}
+
+function limpiarPlanificador() {
+  if (confirm('¿Estás seguro de que quieres limpiar toda la planificación semanal?')) {
+    planificadorSemanal = {
+      lunes: [],
+      martes: [],
+      miercoles: [],
+      jueves: [],
+      viernes: [],
+      sabado: [],
+      domingo: []
+    };
+    guardarDatos();
+    cargarSemana();
+    mostrarNotificacion("Planificación semanal limpiada", "info");
+  }
+}
+
+function exportarPlanificador() {
+  const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+  const diasNombres = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  
+  let contenido = "PLANIFICACIÓN SEMANAL DE COMIDAS\n";
+  contenido += "=================================\n\n";
+  
+  const fecha = new Date().toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  contenido += `Generada el: ${fecha}\n\n`;
+  
+  let totalComidas = 0;
+  
+  dias.forEach((dia, index) => {
+    const recetasDia = planificadorSemanal[dia] || [];
+    totalComidas += recetasDia.length;
+    
+    contenido += `${diasNombres[index].toUpperCase()}\n`;
+    contenido += "=" + "=".repeat(diasNombres[index].length) + "\n";
+    
+    if (recetasDia.length === 0) {
+      contenido += "• Sin comidas planificadas\n\n";
+    } else {
+      recetasDia.forEach((receta, recetaIndex) => {
+        contenido += `• ${receta}\n`;
+      });
+      contenido += "\n";
+    }
+  });
+  
+  
+  // Crear y descargar el archivo
+  const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  
+  a.href = url;
+  a.download = `planificacion-semanal-${new Date().toISOString().split('T')[0]}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  mostrarNotificacion("Planificación semanal exportada exitosamente", "success");
+}
+
 // función para crear nueva receta
 function crearNuevaReceta() {
   const nombre = document.getElementById("nombre-receta").value.trim();
@@ -594,6 +810,7 @@ function guardarDatos() {
       filtroCarrito,
       filtroRecetas
     }));
+    localStorage.setItem(STORAGE_KEYS.PLANIFICADOR, JSON.stringify(planificadorSemanal));
   } catch (error) {
     console.error('Error al guardar datos:', error);
     mostrarNotificacion('Error al guardar datos localmente', 'danger');
@@ -654,6 +871,12 @@ function cargarDatos() {
         if (buscarRecetas) buscarRecetas.value = filtroRecetas;
       }, 100);
     }
+
+    // Cargar planificador
+    const planificadorGuardado = localStorage.getItem(STORAGE_KEYS.PLANIFICADOR);
+    if (planificadorGuardado) {
+      planificadorSemanal = JSON.parse(planificadorGuardado);
+    }
   } catch (error) {
     console.error('Error al cargar datos:', error);
     mostrarNotificacion('Error al cargar datos guardados', 'warning');
@@ -686,6 +909,7 @@ function limpiarDatosGuardados() {
     localStorage.removeItem(STORAGE_KEYS.RECETAS);
     localStorage.removeItem(STORAGE_KEYS.CARRITO);
     localStorage.removeItem(STORAGE_KEYS.FILTROS);
+    localStorage.removeItem(STORAGE_KEYS.PLANIFICADOR);
     location.reload(); // Recargar página para empezar desde cero
   }
 }
