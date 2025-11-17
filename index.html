@@ -45,77 +45,108 @@
         border-radius: 3px;
         font-weight: 500;
       }
-      
-      /* Alternativa con otros colores */
-      /* mark {
-        background-color: #ffc107;
-        color: #212529;
-      } */
+
+      button {
+        background-color: var(--bs-primary) !important;
+        border-color: var(--bs-primary) !important;
+        color: white !important;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color) !important;
+        border-color: var(--secondary-color) !important;
+        color: white !important;
+      }
+
+      .btn-outline-success:hover {
+        background-color: var(--success-color) !important;
+        border-color: var(--success-color) !important;
+        color: white !important;
+      }
+
+
+      .btn-outline-danger:hover {
+        background-color: var(--danger-color) !important;
+        border-color: var(--danger-color) !important;
+        color: white !important;
+      }
+
+      .btn-outline-warning:hover {
+        background-color: var(--warning-color) !important;
+        border-color: var(--warning-color) !important;
+        color: #212529 !important;
+      }
+
+      .btn-custom:hover {
+        background-color: var(--secondary-color) !important;
+        border-color: var(--secondary-color) !important;
+        color: white !important;
+      }
+       
     </style>
   </head>
 
   <body>
-    
-      <nav
-        class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-1"
-        aria-label="Barra de navegación principal"
-      >
-        <div class="container">
-          <a class="navbar-brand fw-bold" href="#">Comidas</a>
-          <button
-            class="navbar-toggler"
-            id="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Alternar navegación"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto" id="main-tabs" role="tablist">
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  id="armar-carrito-tab"
-                  data-bs-toggle="tab"
-                  href="#armar-carrito"
-                  role="tab"
-                  aria-controls="armar-carrito"
-                  aria-selected="true"
-                  >Armar carrito</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="recetas-tab"
-                  data-bs-toggle="tab"
-                  href="#recetas"
-                  role="tab"
-                  aria-controls="recetas"
-                  aria-selected="false"
-                  >Recetas</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="carrito-tab"
-                  data-bs-toggle="tab"
-                  href="#carrito"
-                  role="tab"
-                  aria-controls="carrito"
-                  aria-selected="false"
-                  >Carrito</a
-                >
-              </li>
-            </ul>
-          </div>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-1"
+      aria-label="Barra de navegación principal"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Comidas</a>
+        <button
+          class="navbar-toggler"
+          id="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Alternar navegación"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto" id="main-tabs" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="armar-carrito-tab"
+                data-bs-toggle="tab"
+                href="#armar-carrito"
+                role="tab"
+                aria-controls="armar-carrito"
+                aria-selected="true"
+                >Armar carrito</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="recetas-tab"
+                data-bs-toggle="tab"
+                href="#recetas"
+                role="tab"
+                aria-controls="recetas"
+                aria-selected="false"
+                >Recetas</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="carrito-tab"
+                data-bs-toggle="tab"
+                href="#carrito"
+                role="tab"
+                aria-controls="carrito"
+                aria-selected="false"
+                >Carrito</a
+              >
+            </li>
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
     <main class="container" id="main" role="main">
       <div class="tab-content" id="main-content">
         <!-- Pestaña Armar Carrito -->
@@ -125,9 +156,7 @@
           role="tabpanel"
           aria-labelledby="armar-carrito-tab"
         >
-          <h1 class="mb-4 display-6 text-primary fs-2">
-            Armar Carrito
-          </h1>
+          <h1 class="mb-4 display-6 text-primary fs-2">Armar Carrito</h1>
           <div class="row">
             <div class="col-md-8">
               <!-- Barra de búsqueda -->
@@ -142,13 +171,16 @@
                     id="buscar-carrito"
                     placeholder="Buscar recetas por nombre o ingrediente..."
                   />
-                  <button class="btn btn-outline-secondary" type="button" id="limpiar-buscar-carrito">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="limpiar-buscar-carrito"
+                  >
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
               </div>
-              <ul id="lista-recetas" class="list-group">
-              </ul>
+              <ul id="lista-recetas" class="list-group"></ul>
             </div>
             <div class="col-md-4">
               <aside id="aside">
@@ -158,8 +190,7 @@
                     <p>Selecciona una receta para ver los detalles</p>
                   </div>
                 </div>
-                <div id="botones-carrito" class="mt-3">
-                </div>
+                <div id="botones-carrito" class="mt-3"></div>
               </aside>
             </div>
           </div>
@@ -172,9 +203,7 @@
           role="tabpanel"
           aria-labelledby="recetas-tab"
         >
-          <h1 class="mb-4 display-6 text-primary fs-2">
-            Recetas
-          </h1>
+          <h1 class="mb-4 display-6 text-primary fs-2">Recetas</h1>
           <div class="row">
             <!-- Formulario para crear recetas -->
             <div class="col-md-6">
@@ -185,7 +214,9 @@
                 <div class="card-body">
                   <form id="form-nueva-receta">
                     <div class="mb-3">
-                      <label for="nombre-receta" class="form-label">Nombre de la receta</label>
+                      <label for="nombre-receta" class="form-label"
+                        >Nombre de la receta</label
+                      >
                       <input
                         type="text"
                         class="form-control"
@@ -194,9 +225,11 @@
                         required
                       />
                     </div>
-                    
+
                     <div class="mb-3">
-                      <label for="ingredientes-receta" class="form-label">Ingredientes</label>
+                      <label for="ingredientes-receta" class="form-label"
+                        >Ingredientes</label
+                      >
                       <input
                         type="text"
                         class="form-control"
@@ -205,12 +238,15 @@
                         required
                       />
                       <div class="form-text">
-                        Separa los ingredientes con comas. Se eliminarán automáticamente los espacios extra.
+                        Separa los ingredientes con comas. Se eliminarán
+                        automáticamente los espacios extra.
                       </div>
                     </div>
-                    
+
                     <div class="mb-3">
-                      <label for="pasos-receta" class="form-label">Instrucciones</label>
+                      <label for="pasos-receta" class="form-label"
+                        >Instrucciones</label
+                      >
                       <textarea
                         class="form-control"
                         id="pasos-receta"
@@ -219,7 +255,7 @@
                         required
                       ></textarea>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary w-100">
                       <i class="fas fa-plus me-2"></i>Crear Receta
                     </button>
@@ -227,13 +263,17 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Lista de recetas creadas -->
             <div class="col-md-6">
               <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div
+                  class="card-header d-flex justify-content-between align-items-center"
+                >
                   <h5 class="mb-0">Recetas Disponibles</h5>
-                  <span class="badge bg-secondary" id="contador-recetas">3</span>
+                  <span class="badge bg-secondary" id="contador-recetas"
+                    >3</span
+                  >
                 </div>
                 <div class="card-body">
                   <!-- Barra de búsqueda -->
@@ -248,7 +288,11 @@
                         id="buscar-recetas"
                         placeholder="Buscar por nombre o ingrediente..."
                       />
-                      <button class="btn btn-outline-secondary" type="button" id="limpiar-buscar-recetas">
+                      <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        id="limpiar-buscar-recetas"
+                      >
                         <i class="fas fa-times"></i>
                       </button>
                     </div>
@@ -278,7 +322,10 @@
                 <div class="text-muted text-center p-5">
                   <i class="fas fa-shopping-cart fa-3x mb-3"></i>
                   <h4>Carrito vacío</h4>
-                  <p>Agrega recetas desde "Armar Carrito" para ver la lista de ingredientes aquí</p>
+                  <p>
+                    Agrega recetas desde "Armar Carrito" para ver la lista de
+                    ingredientes aquí
+                  </p>
                 </div>
               </div>
             </div>
@@ -292,13 +339,25 @@
                   <p class="text-muted mb-0">0 ingredientes únicos</p>
                 </div>
                 <div class="card-footer">
-                  <button class="btn btn-outline-success btn-sm w-100 mb-2" id="exportar-lista" disabled>
+                  <button
+                    class="btn btn-outline-success btn-sm w-100 mb-2"
+                    id="exportar-lista"
+                    disabled
+                  >
                     <i class="fas fa-download me-1"></i>Exportar Lista
                   </button>
-                  <button class="btn btn-outline-danger btn-sm w-100 mb-2" id="limpiar-carrito" disabled>
+                  <button
+                    class="btn btn-outline-danger btn-sm w-100 mb-2"
+                    id="limpiar-carrito"
+                    disabled
+                  >
                     <i class="fas fa-trash me-1"></i>Limpiar Carrito
                   </button>
-                  <button class="btn btn-outline-warning btn-sm w-100" id="limpiar-datos" title="Eliminar todos los datos guardados">
+                  <button
+                    class="btn btn-outline-warning btn-sm w-100"
+                    id="limpiar-datos"
+                    title="Eliminar todos los datos guardados"
+                  >
                     <i class="fas fa-database me-1"></i>Reset Total
                   </button>
                 </div>
